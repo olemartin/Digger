@@ -1,0 +1,64 @@
+body {
+	margin: 0;
+	padding: 30;
+	background-color: #EAECEE;
+	font-family: Verdana, sans-serif;
+	font-size: 10px;
+}
+
+
+h1 {
+	font-size: 300%;
+
+}
+div.header {
+    width: 960px;
+}
+span.heading {
+    float:left;
+    font-size: 300%;
+    padding: 20px 0 20 0;
+}
+a.add {
+    float: right;
+    margin-top: 40px;
+    text-decoration: none;
+}
+
+a {
+	color : #050505;
+    font-size: 150%;
+}
+
+div.story {
+    clear: both;
+	background: #ffffff;
+	width: 960px;
+    padding: 5px 20px 5px 10px;
+	
+    margin-bottom: 10px;
+	border-right: solid 2px #a0a0a0;
+	border-bottom: solid 2px #a0a0a0;
+}
+
+.errorMessage {
+	color: #ff0000;
+	font-weight: bold;
+}
+
+label {
+    width: 200px;
+    clear: both;
+    float: left;
+}
+
+input {
+    float: left;
+}
+
+input.button {
+    clear:both;
+    margin-top: 30px;
+    background-color: white;
+    border:  #fff outset thin;
+}
