@@ -1,10 +1,9 @@
 package no.bekk.domain;
 
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.Serializable;
 
-public class Story {
+public class Story implements Serializable {
     private String id;
     private long score;
     private String title;
@@ -71,6 +70,10 @@ public class Story {
         this.user = user;
     }
 
+    public void setScore(long score) {
+        this.score = score;
+    }
+
     @Override
     public String toString() {
         return "Story{" +
@@ -82,22 +85,30 @@ public class Story {
                 '}';
     }
 
-    public static Story fromMap(long score, String id, Map<String, String> map) {
-        return new Story(
-                id,
-                score,
-                map.get("title"),
-                map.get("url"),
-                map.get("description"),
-                map.get("user"));
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Story story = (Story) o;
+
+        if (description != null ? !description.equals(story.description) : story.description != null) return false;
+        if (!id.equals(story.id)) return false;
+        if (title != null ? !title.equals(story.title) : story.title != null) return false;
+        if (url != null ? !url.equals(story.url) : story.url != null) return false;
+        if (user != null ? !user.equals(story.user) : story.user != null) return false;
+
+        return true;
     }
 
-    public Map<String, String> toMap() {
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("title", getTitle());
-        map.put("url", getUrl());
-        map.put("description", getDescription());
-        map.put("user", getUser());
-        return map;
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + (title != null ? title.hashCode() : 0);
+        result = 31 * result + (url != null ? url.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (user != null ? user.hashCode() : 0);
+        return result;
     }
 }

@@ -9,16 +9,16 @@
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
         http://schema.cloudfoundry.org/spring http://schema.cloudfoundry.org/spring/cloudfoundry-spring.xsd">
 
-    <cloud:redis-connection-factory id="connectionFactory"/>
+    <!--<cloud:redis-connection-factory id="connectionFactory"/>-->
 
-    <!-- Redis client -->
-    <!-- bean id="connectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+     <!--Redis client -->
+    <bean id="connectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
         <property name="hostName" value="localhost"/>
         <property name="port" value="6379"/>
         <property name="password" value=""/>
-    </bean -->
+    </bean>
 
-    <bean id="redisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
         <property name="connectionFactory" ref="connectionFactory"/>
     </bean>
 
