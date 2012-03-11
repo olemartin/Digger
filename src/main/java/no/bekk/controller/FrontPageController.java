@@ -1,14 +1,14 @@
 package no.bekk.controller;
 
-import no.bekk.domain.Story;
+import java.util.List;
+
+import no.bekk.domain.StoryHolder;
 import no.bekk.redis.RedisRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import java.util.List;
 
 
 @Controller
@@ -17,7 +17,7 @@ public class FrontPageController {
     @Autowired
     private RedisRepo repo;
 
-    private List<Story> getFrontPageStories() {
+    private List<StoryHolder> getFrontPageStories() {
         return repo.getFrontPageStories();
     }
 

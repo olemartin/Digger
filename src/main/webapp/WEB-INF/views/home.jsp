@@ -3,7 +3,7 @@
 <%@ page session="false" contentType="text/html; charset=UTF-8" %>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="resources/css/screen.css"/>
+    <link rel="stylesheet" type="text/css" href="../resources/css/screen.css"/>
 	<title>Home</title>
 </head>
 <body>
@@ -13,12 +13,12 @@
     </span>
     <a href="add" class="add">Add new story</a>
 </div>
-<c:forEach items="${stories}" var="story">
+<c:forEach items="${stories}" var="holder">
     <div class="story">
-        <h3><a href="${story.url}">${story.title}</a></h3>
-        <sub>Submitted by ${story.user}</sub>
-        <p>${story.description}</p>
-        (${story.score} votes) <a href="vote?id=${story.id}">Vote!</a>
+        <h3><a href="${story.url}">${holder.story.title}</a></h3>
+        <sub>Submitted by ${holder.story.user}</sub>
+        <p>${holder.story.description}</p>
+        (${holder.score} votes) <a href="vote?id=${holder.id}">Vote!</a>
     </div>
 </c:forEach>
 </body>

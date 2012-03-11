@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Set;
 
 import no.bekk.domain.Story;
+import no.bekk.domain.StoryHolder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Component;
@@ -18,36 +20,46 @@ public class RedisRepo {
 
 
     @Autowired
-    private RedisTemplate<String,Story> storyTemplate;
-    
+    private RedisTemplate<String, Story> storyTemplate;
+
     @Autowired
     private RedisTemplate<String, String> genericTemplate;
 
 
-    public List<Story> getFrontPageStories() {
+    public List<StoryHolder> getFrontPageStories() {
         Set<ZSetOperations.TypedTuple<String>> storyIds =
-                genericTemplate.opsForZSet().reverseRangeWithScores(STORIES_KEY, 0, Long.MAX_VALUE);
-        List<Story> stories = new LinkedList<Story>();
+                genericTemplate.opsForZSet().reverseRangeWithScores(STORIES_KEY, Long.MIN_VALUE, Long.MAX_VALUE);
+        List<StoryHolder> stories = new LinkedList<StoryHolder>();
         for (ZSetOperations.TypedTuple<String> tuple : storyIds) {
-            Story story = storyTemplate.opsForValue().get(getStoryIdKey(tuple.getValue()));
-            story.setScore(tuple.getScore().longValue());
-            story.setId(tuple.getValue());
-            stories.add(story);
+            stories.add(new StoryHolder(
+                    storyTemplate.opsForValue().get(getStoryIdKey(tuple.getValue())),
+                    tuple.getValue(), tuple.getScore()));
         }
         return stories;
     }
 
-    public void storeStory(Story story) {
+    public long storeStory(Story story) {
         long id = genericTemplate.opsForValue().increment(STORY_ID_INCR, 1);
         storyTemplate.opsForValue().set(getStoryIdKey(String.valueOf(id)), story);
         genericTemplate.opsForZSet().add(STORIES_KEY, String.valueOf(id), 1);
+        return id;
     }
 
     public void voteOnStory(String storyId) {
-        genericTemplate.opsForZSet().incrementScore(STORIES_KEY, storyId, 1);
+        double votes = genericTemplate.opsForZSet().incrementScore(STORIES_KEY, storyId, 1);
+        RedisConnection connection = genericTemplate.getConnectionFactory().getConnection();
+        try {
+            connection.publish("voted".getBytes(), (storyId + ":" + votes).getBytes());
+        } finally {
+            connection.close();
+        }
     }
 
     private String getStoryIdKey(String id) {
         return "story:" + id;
+    }
+
+    public void deleteStory(String id) {
+        storyTemplate.opsForZSet().remove(STORIES_KEY, id);
     }
 }

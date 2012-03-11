@@ -23,7 +23,6 @@ public class AddStoryController {
     @RequestMapping(value ="add", method = RequestMethod.POST)
     public String add(Story story) {
         repo.storeStory(story);
-        System.out.println(story);
         return "redirect:/";
     }
 }
