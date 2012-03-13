@@ -9,20 +9,41 @@ body {
 
 h1 {
 	font-size: 300%;
+}
 
+h3 {
+    display: inline;
 }
 div.header {
-    width: 960px;
+    width: 95%;
 }
 span.heading {
     float:left;
     font-size: 300%;
     padding: 20px 0 20 0;
 }
+span.tagheading{
+    font-size: 50%;
+}
 a.add {
     float: right;
     margin-top: 40px;
     text-decoration: none;
+}
+.tags {
+    font-size: 0.8em;
+}
+.tags a {
+    text-decoration: none;
+}
+
+.submitted {
+    display: block;
+    clear: both;
+}
+
+input.tag {
+    border:#888 thin solid;
 }
 
 a {
@@ -33,9 +54,8 @@ a {
 div.story {
     clear: both;
 	background: #ffffff;
-	width: 960px;
+	width: 95%;
     padding: 5px 20px 5px 10px;
-	
     margin-bottom: 10px;
 	border-right: solid 2px #a0a0a0;
 	border-bottom: solid 2px #a0a0a0;
@@ -52,7 +72,7 @@ label {
     float: left;
 }
 
-input {
+input.addInput {
     float: left;
 }
 

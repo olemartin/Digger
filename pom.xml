@@ -11,7 +11,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jetty.version>6.1.4</jetty.version>
-        <spring.version>3.0.5.RELEASE</spring.version>
+        <spring.version>3.1.0.RELEASE</spring.version>
         <slf4j.version>1.5.10</slf4j.version>
         <java.version>1.5</java.version>
         <junit.version>4.8.2</junit.version>
@@ -50,7 +50,7 @@
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-redis</artifactId>
-            <version>1.0.0.M4</version>
+            <version>1.0.0.RELEASE</version>
         </dependency>
 
         <dependency>
@@ -148,6 +148,10 @@
             <id>spring-milestone</id>
             <name>Spring Maven MILESTONE Repository</name>
             <url>http://maven.springframework.org/milestone</url>
+        </repository><repository>
+            <id>spring-release</id>
+            <name>Spring Maven Release Repository</name>
+            <url>http://maven.springframework.org/release</url>
         </repository>
     </repositories>
 

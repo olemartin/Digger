@@ -11,7 +11,6 @@
 		configure as beans -->
 	<context:component-scan base-package="no.bekk.controller" />
 
-	<tx:annotation-driven />
 	<mvc:annotation-driven />
 
 	<mvc:resources mapping="/resources/**" location="/resources/" />

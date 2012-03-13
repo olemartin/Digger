@@ -12,10 +12,10 @@
 	Add story
 </h1>
 <form:form commandName="story" >
-    <form:label path="url">Url</form:label><form:input path="url"/>
-    <form:label path="title">Title</form:label><form:input path="title"/>
-    <form:label path="description">Description</form:label><form:input path="description"/>
-    <form:label path="user">User</form:label><form:input path="user"/>
+    <form:label path="url">Url</form:label><form:input cssClass="addInput" path="url"/>
+    <form:label path="title">Title</form:label><form:input cssClass="addInput" path="title"/>
+    <form:label path="description">Description</form:label><form:input cssClass="addInput" path="description"/>
+    <form:label path="user">User</form:label><form:input cssClass="addInput" path="user"/>
     <input class="button" type="submit" value="Save Changes" />
 </form:form>
 

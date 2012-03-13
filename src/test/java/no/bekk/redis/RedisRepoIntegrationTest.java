@@ -21,7 +21,7 @@ public class RedisRepoIntegrationTest {
         Story story = new Story("tittel", "url", "description", "user");
         long id = repo.storeStory(story);
         repo.voteOnStory(String.valueOf(id));
-        StoryHolder storedStory = repo.getFrontPageStories().get(0);
+        StoryHolder storedStory = repo.getStories().get(0);
         assertEquals(2, storedStory.getScore());
         repo.deleteStory(String.valueOf(id));
     }
