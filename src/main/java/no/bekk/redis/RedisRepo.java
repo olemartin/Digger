@@ -23,12 +23,12 @@ public class RedisRepo {
     private RedisTemplate<String, Story> storyTemplate;
 
     @Autowired
-    private RedisTemplate<String, String> genericTemplate;
+    private RedisTemplate<String, String> stringTemplate;
 
 
     public List<StoryHolder> getFrontPageStories() {
         Set<ZSetOperations.TypedTuple<String>> storyIds =
-                genericTemplate.opsForZSet().reverseRangeWithScores(STORIES_KEY, Long.MIN_VALUE, Long.MAX_VALUE);
+                stringTemplate.opsForZSet().reverseRangeWithScores(STORIES_KEY, Long.MIN_VALUE, Long.MAX_VALUE);
         List<StoryHolder> stories = new LinkedList<StoryHolder>();
         for (ZSetOperations.TypedTuple<String> tuple : storyIds) {
             stories.add(new StoryHolder(
@@ -39,15 +39,15 @@ public class RedisRepo {
     }
 
     public long storeStory(Story story) {
-        long id = genericTemplate.opsForValue().increment(STORY_ID_INCR, 1);
+        long id = stringTemplate.opsForValue().increment(STORY_ID_INCR, 1);
         storyTemplate.opsForValue().set(getStoryIdKey(String.valueOf(id)), story);
-        genericTemplate.opsForZSet().add(STORIES_KEY, String.valueOf(id), 1);
+        stringTemplate.opsForZSet().add(STORIES_KEY, String.valueOf(id), 1);
         return id;
     }
 
     public void voteOnStory(String storyId) {
-        double votes = genericTemplate.opsForZSet().incrementScore(STORIES_KEY, storyId, 1);
-        RedisConnection connection = genericTemplate.getConnectionFactory().getConnection();
+        double votes = stringTemplate.opsForZSet().incrementScore(STORIES_KEY, storyId, 1);
+        RedisConnection connection = stringTemplate.getConnectionFactory().getConnection();
         try {
             connection.publish("voted".getBytes(), (storyId + ":" + votes).getBytes());
         } finally {

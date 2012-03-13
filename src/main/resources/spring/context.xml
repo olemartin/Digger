@@ -20,7 +20,10 @@
 
     <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
         <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="defaultSerializer" ref="serializer"/>
     </bean>
+
+    <bean id="serializer" class="no.bekk.redis.DiggerSerializer"/>
 
     <context:annotation-config/>
     <context:component-scan base-package="no.bekk.redis"/>
